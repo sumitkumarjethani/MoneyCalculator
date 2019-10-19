@@ -11,22 +11,25 @@ public class MoneyCalculator {
     
     private double amount;
     private double exchangeRate;
-    String currency;
+    private String currencyFrom;
+    private String currencyTo;
     
     private void input(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Introduce una cantidad: ");
         amount = Double.parseDouble(scanner.next());
-        System.out.println("Introduce una Divisa: ");
-        currency = scanner.next();
+        System.out.println("Introduce una divisa origen: ");
+        currencyFrom = scanner.next();
+        System.out.println("Introduce una divisa destino: ");
+        currencyTo = scanner.next();
     }
     
     private void process() throws IOException{
-        this.exchangeRate = getExchangeRate(currency,"EUR");
+        this.exchangeRate = getExchangeRate(currencyFrom,currencyTo);
     }
     
     private void output(){
-        System.out.println(this.amount + " " + currency + " equivalen a: " + amount*exchangeRate + " EUR");
+        System.out.println(this.amount + " " + currencyFrom + " equivalen a: " + amount*exchangeRate + " " + currencyTo);
     }
     
     private void control() throws IOException {
