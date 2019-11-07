@@ -11,5 +11,5 @@ public abstract class FileCurrencyLoader implements CurrencyLoader {
     }
     
     @Override
-    public abstract void load(Map<String,Currency> map);
+    public abstract Map<String,Currency> load();
 }

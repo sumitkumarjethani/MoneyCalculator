@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface CurrencyLoader {
     
-    public void load(Map<String,Currency> map);
+    public Map<String,Currency> load();
 }

@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser; 
 import com.google.gson.JsonPrimitive;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 
@@ -23,7 +24,8 @@ public class TxtCurrencyLoader extends FileCurrencyLoader {
     }
     
     @Override
-    public void load(Map<String,Currency> map){
+    public Map<String,Currency> load(){
+        Map<String,Currency>result = new HashMap<String,Currency>(); 
         String line = convertFileToString();
         JsonParser parser = new JsonParser(); 
         JsonObject gsonObj = parser.parse(line).getAsJsonObject();
@@ -35,8 +37,9 @@ public class TxtCurrencyLoader extends FileCurrencyLoader {
             JsonPrimitive symbolPrimitive  = info.getAsJsonPrimitive("symbol");
             String symbol = symbolPrimitive.getAsString();
             Currency add = new Currency(name,symbol,base);
-            map.put(base, add);
+            result.put(base, add);
         }
+        return result;
     }
     
     private String convertFileToString(){
