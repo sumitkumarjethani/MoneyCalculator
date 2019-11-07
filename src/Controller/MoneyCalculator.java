@@ -1,4 +1,9 @@
-package moneycalculator;
+package Controller;
+
+import Model.*;
+import com.google.gson.JsonObject; 
+import com.google.gson.JsonParser; 
+import com.google.gson.JsonPrimitive;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +11,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.Scanner;
 
 public class MoneyCalculator {
@@ -17,10 +21,7 @@ public class MoneyCalculator {
     private CurrencyList currencies;
     
     public MoneyCalculator(){
-        Currency[] data = new Currency[2];
-        data[0] = new Currency("Dollar",'$',"USD");
-        data[1] = new Currency("Euro",'€',"EUR");
-        currencies = new CurrencyList(data);
+        currencies = new CurrencyList();
     }
     
     private void input(){
@@ -53,18 +54,32 @@ public class MoneyCalculator {
     }
     
     private static ExchangeRate getExchangeRate(Currency from, Currency to) throws IOException{
-        URL url = new URL("http://free.currencyconverterapi.com/api/v5/convert?q=" + from.getCode() + "_" + to.getCode() + "&compact=y&apiKey=1eb50c98f4a50de7d844");
+        URL url = new URL("https://api.exchangeratesapi.io/latest?base=" + from.getCode());
         URLConnection connection = url.openConnection();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
-            ExchangeRate result;
+            ExchangeRate result = null;
             String line = reader.readLine();
-            String line1 = line.substring(line.indexOf(to.getCode()) + 12, line.indexOf("}"));
-            result = new ExchangeRate(Double.parseDouble(line1),from,to,LocalDate.of(2019, Month.NOVEMBER, 3));
+            JsonParser parser = new JsonParser(); 
+            JsonObject gsonObj = parser.parse(line).getAsJsonObject();
+            JsonObject x = gsonObj.getAsJsonObject("rates");
+            double rate = 0.0;
+            for(Object key: x.keySet()){
+                String codeTo = (String) key;
+                if(codeTo.equals(to.getCode())){
+                    JsonPrimitive ratePrimitive = x.getAsJsonPrimitive(codeTo);
+                    rate = ratePrimitive.getAsDouble();
+                    break;
+                }
+            }
+            JsonPrimitive datePrimitive = gsonObj.getAsJsonPrimitive("date");
+            String date =  datePrimitive.getAsString();
+            result = new ExchangeRate(rate,from,to,LocalDate.of(Integer.parseInt(date.substring(0, 4)), 
+                                      Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10))));
             return result;
         }
     }
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         MoneyCalculator moneyCalculator = new MoneyCalculator();
         moneyCalculator.control();
     }

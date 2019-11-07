@@ -1,12 +1,12 @@
-package moneycalculator;
+package Model;
 
 public class Currency {
     private final String name;
-    private final char symbol;
+    private final String symbol;
     private final String code;
 
 
-    public Currency(String name, char symbol, String code) {
+    public Currency(String name, String symbol, String code) {
         this.name = name;
         this.symbol = symbol;
         this.code = code;
@@ -16,7 +16,7 @@ public class Currency {
         return name;
     }
 
-    public char getSymbol() {
+    public String getSymbol() {
         return symbol;
     }
 

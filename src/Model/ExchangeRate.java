@@ -1,7 +1,6 @@
-package moneycalculator;
+package Model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ExchangeRate {
     private double rate;

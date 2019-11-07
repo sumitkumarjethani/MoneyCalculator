@@ -1,16 +1,18 @@
-package moneycalculator;
+package Model;
 
 import java.util.HashMap;
 import java.util.Map;
+import View.FileCurrencyLoader;
+import View.TxtCurrencyLoader;
 
 public class CurrencyList {
     private Map<String,Currency> currencies;
+    private FileCurrencyLoader loader;
     
-    public CurrencyList(Currency[] data){
+    public CurrencyList(){
         currencies = new HashMap<String,Currency>();
-        for (int i = 0; i < data.length; i++) {
-            add(data[i]);        
-        }
+        loader = new TxtCurrencyLoader("currency.txt");
+        loader.load(currencies);
     }
     
     private void add(Currency currency){
