@@ -1,4 +1,4 @@
-package Controller;
+package View;
 
 import Model.*;
 import com.google.gson.JsonObject; 
@@ -47,13 +47,13 @@ public class MoneyCalculator {
                            money.getAmount()*exchangeRate.getRate() + " " + currencyTo.getSymbol());
     }
     
-    private void control() throws IOException {
+    public void control() throws IOException {
         input();
         process();
         output();
     }
     
-    private static ExchangeRate getExchangeRate(Currency from, Currency to) throws IOException{
+private static ExchangeRate getExchangeRate(Currency from, Currency to) throws IOException{
         URL url = new URL("https://api.exchangeratesapi.io/latest?base=" + from.getCode());
         URLConnection connection = url.openConnection();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
@@ -77,10 +77,5 @@ public class MoneyCalculator {
                                       Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10))));
             return result;
         }
-    }
-    
-    public static void main(String[] args) throws IOException{
-        MoneyCalculator moneyCalculator = new MoneyCalculator();
-        moneyCalculator.control();
     }
 }
