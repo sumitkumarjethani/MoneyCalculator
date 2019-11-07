@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import com.google.gson.JsonObject; 
 import com.google.gson.JsonParser; 
 import com.google.gson.JsonPrimitive;
+import java.io.IOException;
 
 
 
@@ -40,19 +41,18 @@ public class TxtCurrencyLoader extends FileCurrencyLoader {
     
     private String convertFileToString(){
         String result = "";
-        //Cambiarlo
         try{
             BufferedReader reader = new BufferedReader(new FileReader(new File(this.filepath)));
-            Scanner scanner = new Scanner(reader);
-            while(scanner.hasNextLine()){
-                result = result + scanner.nextLine();
-            }
+            FileIteratorReader iteratorReader = new FileIteratorReader(reader);
+            for (String line : iteratorReader) result = result + line;
             result = result.replaceAll(" ","");
             result = result.replaceAll("\n", "");
-            scanner.close();
+            reader.close();
             return result;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(TxtCurrencyLoader.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("BufferedReader Exception : File Not Found: " + ex);
+        } catch (IOException ex){
+            System.out.println("ERROR TxtCurrencyLoader: IOException " + ex);
         }
         return result;
     }

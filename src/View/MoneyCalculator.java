@@ -29,6 +29,8 @@ public class MoneyCalculator {
         System.out.println("Introduce una cantidad: ");
         double amount = Double.parseDouble(scanner.next());
         
+        //Poner excepciones por si el from o to es null ya que 
+        //en el mapa no existirán y tambien para amount por si meten una string
         System.out.println("Introduce una divisa origen: ");
         Currency currencyFrom = currencies.get(scanner.next());
         money = new Money(amount,currencyFrom);
