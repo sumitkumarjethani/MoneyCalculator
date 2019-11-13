@@ -1,6 +1,9 @@
-package View;
+package Model.persistence.Web;
 
-import Model.*;
+import Model.Currency;
+import Model.CurrencyList;
+import Model.ExchangeRate;
+import Model.persistence.ExchangeRateLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -11,17 +14,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class WebExchangeRateLoader implements ExchangeRateLoader{
     
     @Override
-    public Map<String, ExchangeRate> load(Currency from){
-        Map<String,ExchangeRate> result = new HashMap<String,ExchangeRate>();
+    public ExchangeRate load(Currency from, Currency to,CurrencyList currencies){
+        ExchangeRate result;
         try {
-            CurrencyList currencies = new CurrencyList();
             URL url = new URL("https://api.exchangeratesapi.io/latest?base=" + from.getCode());
             URLConnection connection = url.openConnection();
             
@@ -29,20 +29,20 @@ public class WebExchangeRateLoader implements ExchangeRateLoader{
                 String line = reader.readLine();
                 JsonParser parser = new JsonParser();
                 JsonObject gsonObj = parser.parse(line).getAsJsonObject();
-                
                 JsonPrimitive datePrimitive = gsonObj.getAsJsonPrimitive("date");
                 String date =  datePrimitive.getAsString();
-                
-                double rate;
+                double rate = 0;
                 JsonObject x = gsonObj.getAsJsonObject("rates");
                 for(Object key: x.keySet()){
                     String codeTo = (String) key;
-                    JsonPrimitive ratePrimitive = x.getAsJsonPrimitive(codeTo);
-                    rate = ratePrimitive.getAsDouble();
-                    Currency to = currencies.get(codeTo);
-                    result.put(codeTo, new ExchangeRate(rate,from,to,LocalDate.of(Integer.parseInt(date.substring(0, 4)),
-                            Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10)))));
+                    if(codeTo.equals(to.getCode())){
+                        JsonPrimitive ratePrimitive = x.getAsJsonPrimitive(codeTo);
+                        rate = ratePrimitive.getAsDouble();
+                        break;
+                    }
                 }
+                result = new ExchangeRate(rate,from,to,LocalDate.of(Integer.parseInt(date.substring(0, 4)),
+                            Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10))));
                 reader.close();
                 return result;
             }catch (IOException ex) {
@@ -53,7 +53,7 @@ public class WebExchangeRateLoader implements ExchangeRateLoader{
         } catch (IOException ex) {
             System.out.println("ERROR OpenConnection IOException: " + ex);
         }
-        return result;
+        return null;
     }
     
 }

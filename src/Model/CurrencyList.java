@@ -1,16 +1,17 @@
 package Model;
 
+import java.util.HashMap;
 import java.util.Map;
-import View.FileCurrencyLoader;
-import View.TxtCurrencyLoader;
 
 public class CurrencyList {
     private Map<String,Currency> currencies;
-    private FileCurrencyLoader loader;
-    
+
     public CurrencyList(){
-        loader = new TxtCurrencyLoader("currency.txt");
-        currencies = loader.load();
+        currencies = new HashMap<String,Currency>();
+    }
+    
+    public Map<String, Currency> getCurrencies() {
+        return currencies;
     }
     
     public Currency get(String code){

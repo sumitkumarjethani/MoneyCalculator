@@ -1,31 +1,28 @@
-package View;
+package Model.persistence.File.Txt;
 
-import Model.*;
+import Model.Currency;
+import Model.CurrencyList;
+import Model.persistence.File.FileIteratorReader;
+import Model.persistence.File.FileCurrencyLoader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.google.gson.JsonObject; 
 import com.google.gson.JsonParser; 
 import com.google.gson.JsonPrimitive;
 import java.io.IOException;
-import java.util.HashMap;
-
-
 
 public class TxtCurrencyLoader extends FileCurrencyLoader {
     
-    public TxtCurrencyLoader(String filepath){
-        super(filepath);
+    public TxtCurrencyLoader(String filename){
+        super(filename);
     }
     
     @Override
-    public Map<String,Currency> load(){
-        Map<String,Currency>result = new HashMap<String,Currency>(); 
+    public void load(CurrencyList list){
+        Map<String,Currency> currencies = list.getCurrencies();
         String line = convertFileToString();
         JsonParser parser = new JsonParser(); 
         JsonObject gsonObj = parser.parse(line).getAsJsonObject();
@@ -37,15 +34,14 @@ public class TxtCurrencyLoader extends FileCurrencyLoader {
             JsonPrimitive symbolPrimitive  = info.getAsJsonPrimitive("symbol");
             String symbol = symbolPrimitive.getAsString();
             Currency add = new Currency(name,symbol,base);
-            result.put(base, add);
+            currencies.put(base, add);
         }
-        return result;
     }
     
     private String convertFileToString(){
         String result = "";
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(new File(this.filepath)));
+            BufferedReader reader = new BufferedReader(new FileReader(new File(this.filename)));
             FileIteratorReader iteratorReader = new FileIteratorReader(reader);
             for (String line : iteratorReader) result = result + line;
             result = result.replaceAll(" ","");

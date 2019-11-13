@@ -3,10 +3,10 @@ package Model;
 import java.time.LocalDate;
 
 public class ExchangeRate {
-    private double rate;
-    private Currency from;
-    private Currency to;
-    private LocalDate date;
+    private final double rate;
+    private final Currency from;
+    private final Currency to;
+    private final LocalDate date;
 
     public ExchangeRate(double rate, Currency from, Currency to, LocalDate date) {
         this.rate = rate;
