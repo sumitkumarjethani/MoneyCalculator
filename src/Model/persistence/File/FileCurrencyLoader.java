@@ -7,7 +7,6 @@ import Model.persistence.CurrencyLoader;
 public abstract class FileCurrencyLoader implements CurrencyLoader {
     protected String filename;
 
-    
     public FileCurrencyLoader(String filename){
         this.filename = filename;
     }

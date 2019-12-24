@@ -12,42 +12,50 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class MyMoneyDialog extends JPanel implements MoneyDialog{
-    private final JLabel moneyLabel;
-    private final JTextField moneyTextField;
-    private final JLabel fromLabel;
-    private final JComboBox currenciesFromBox;
-    private final JLabel toLabel;
-    private final JComboBox currenciesToBox;
     private final CurrencyList currencies;
+    private final JTextField moneyTextField;
+    private final JComboBox boxFrom;
+    private final JComboBox boxTo;
     
     public MyMoneyDialog(CurrencyList currencies){
         this.currencies = currencies;
-        moneyLabel = new JLabel("Amount");
-        moneyTextField = new JTextField(20);
-        fromLabel = new JLabel("Currency From");
-        toLabel = new JLabel("Currency To");
-        currenciesFromBox = new JComboBox();
-        currenciesToBox = new JComboBox();
-        addCurrenciesBox();
         this.setLayout(new BorderLayout());
-        
-        JPanel up = new JPanel(new FlowLayout());
-        up.add(moneyLabel);
+        moneyTextField = new JTextField(20);
+        boxFrom = addCurrencyBox();
+        boxTo = addCurrencyBox();
+        this.add(up(),BorderLayout.NORTH);
+        this.add(center(),BorderLayout.CENTER);
+    }
+    
+    private JPanel up() {
+        JPanel up = new JPanel();
+        up.setLayout(new FlowLayout());
+        up.add(new JLabel("Amount"));
         up.add(moneyTextField);
-        up.add(fromLabel);
-        up.add(currenciesFromBox);
-        this.add(up,BorderLayout.NORTH);
-        
-        JPanel center = new JPanel(new FlowLayout());
-        center.add(toLabel);
-        center.add(currenciesToBox);
-        this.add(center,BorderLayout.CENTER);
-        
+        up.add(new JLabel("Currency From"));
+        up.add(boxFrom);
+        return up;
+    }
+    
+    private JPanel center() {
+        JPanel center = new JPanel();
+        center.setLayout(new FlowLayout());
+        center.add(new JLabel("Currency To"));
+        center.add(boxTo);
+        return center;
+    }
+    
+    private JComboBox addCurrencyBox() {
+        JComboBox comboBox = new JComboBox();
+        for (HashMap.Entry<String,Currency> i : currencies.getCurrencies().entrySet()) {
+            comboBox.addItem(i.getKey());
+        }
+        return comboBox;
     }
 
     @Override
     public Money getMoney() {
-        Currency from = currencies.get(currenciesFromBox.getSelectedItem().toString());
+        Currency from = currencies.get(boxFrom.getSelectedItem().toString());
         Money result;
         if(moneyTextField.getText().matches("^[+]?([0-9]+(?:[\\.][0-9]*)?|\\.[0-9]+)$")){
              result = new Money(Double.parseDouble(moneyTextField.getText()),from);
@@ -59,52 +67,21 @@ public class MyMoneyDialog extends JPanel implements MoneyDialog{
 
     @Override
     public Currency getCurrencyTo() {
-        Currency to = currencies.get(currenciesToBox.getSelectedItem().toString());
+        Currency to = currencies.get(boxTo.getSelectedItem().toString());
         return to;
     }
-
-    private void addCurrenciesBox() {
-        for (HashMap.Entry<String,Currency> i : currencies.getCurrencies().entrySet()) {
-            currenciesFromBox.addItem(i.getKey());
-            currenciesToBox.addItem(i.getKey());
-        }
+    
+    public Currency getCurrencyFrom() {
+        Currency from = currencies.get(boxFrom.getSelectedItem().toString());
+        return from;
+    }
+    
+    
+    public void setMoneyTextField(String line){
+        moneyTextField.setText(line);
     }
     
     public JPanel getPanel(){
         return this;
     }
-
-    public JLabel getMoneyLabel() {
-        return moneyLabel;
-    }
-
-    public JTextField getMoneyTextField() {
-        return moneyTextField;
-    }
-    
-    public void setMoneyTextField(String line){
-        moneyTextField.setText(line);
-    }
-
-    public JLabel getFromLabel() {
-        return fromLabel;
-    }
-
-    public JComboBox getCurrenciesFromBox() {
-        return currenciesFromBox;
-    }
-
-    public JLabel getToLabel() {
-        return toLabel;
-    }
-
-    public JComboBox getCurrenciesToBox() {
-        return currenciesToBox;
-    }
-
-    public CurrencyList getCurrencies() {
-        return currencies;
-    }
-    
-    
 }

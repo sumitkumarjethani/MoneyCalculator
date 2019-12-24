@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class WebExchangeRateLoader implements ExchangeRateLoader{
     
     @Override
-    public ExchangeRate load(Currency from, Currency to,CurrencyList currencies){
+    public ExchangeRate load(Currency from, Currency to){
         ExchangeRate result;
         try {
             URL url = new URL("https://api.exchangeratesapi.io/latest?base=" + from.getCode());
@@ -55,5 +55,4 @@ public class WebExchangeRateLoader implements ExchangeRateLoader{
         }
         return null;
     }
-    
 }

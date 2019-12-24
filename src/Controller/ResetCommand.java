@@ -3,7 +3,6 @@ package Controller;
 import View.MyMoneyDialog;
 import View.MyMoneyDisplay;
 
-
 public class ResetCommand implements Command{
 
     private final MyMoneyDialog  myMoneyDialog;

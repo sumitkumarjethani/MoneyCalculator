@@ -16,45 +16,46 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MainFrame extends JFrame implements ActionListener{
-    private final CurrencyList currencies;
-
-    private final ExchangeRateLoader rloader;
-    private final Map<String,Command> commands;
+public class MainFrame extends JFrame{
+    private Map<String,Command> commands;
+    private Map<String,String> labels;
     private final MyMoneyDialog myMoneyDialog;
     private final MyMoneyDisplay myMoneyDisplay;
-    private final JButton calculate;
-    private final JButton reset;
-    private final JButton cancel;
     
-    public MainFrame(CurrencyList currencies,ExchangeRateLoader rloader){
-        super("Money Calculator");
+    public MainFrame(MyMoneyDialog moneyDialog, MyMoneyDisplay moneyDisplay){
+        setTitle("Money Calculator");
+        setSize(500,300);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
         commands = new HashMap();
-        this.currencies = currencies;
-        this.rloader = rloader;
-        myMoneyDialog = new MyMoneyDialog(this.currencies);
-        myMoneyDisplay = new MyMoneyDisplay();
-        calculate = new JButton("Calculate");
-        reset = new JButton("Reset");
-        cancel = new JButton("Cancel");
-        calculate.addActionListener(this);
-        reset.addActionListener(this);
-        cancel.addActionListener(this);
-        
-        this.setSize(400, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+        labels = new HashMap();
+        myMoneyDialog = moneyDialog;
+        myMoneyDisplay = moneyDisplay;
+        initLabels();
+        this.add(toolbar(),BorderLayout.SOUTH);
         this.add(myMoneyDialog.getPanel(),BorderLayout.NORTH);
         this.add(myMoneyDisplay.getPanel(),BorderLayout.CENTER);
-        
-        JPanel buttons = new JPanel(new FlowLayout());
-        buttons.add(calculate);
-        buttons.add(reset);
-        buttons.add(cancel);
-        this.add(buttons,BorderLayout.SOUTH);
-        
-        this.pack();
+        this.setResizable(false);
     }
+
+
+    /*
+    @Override
+    public void paint(Graphics g) {
+        g.clearRect(0, 0, this.getWidth(), this.getHeight());
+        try {
+            g.drawImage(awtImage(), 0, 0, this);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    private Image awtImage() throws IOException {
+        return ImageIO.read(new File("background.jpg"));
+    }
+    */
     
     public void execute(){
         this.setVisible(true);
@@ -64,60 +65,33 @@ public class MainFrame extends JFrame implements ActionListener{
         commands.put(name, command);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae){
-        if(ae.getSource() == calculate){
-            try {
-                commands.get("Calculate").toExecute();
-            } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+    private void initLabels() {
+        labels.put("Calculate", "Calculate");
+        labels.put("Reset", "Reset");
+        labels.put("Rates", "Rates");
+    }
+
+    private JPanel toolbar() {
+        JPanel toolbar = new JPanel();
+        toolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
+        toolbar.add(button("Calculate"));
+        toolbar.add(button("Reset"));
+        toolbar.add(button("Rates"));
+        return toolbar;
+    }
+
+    private JButton button(String id) {
+        JButton button = new JButton(labels.get(id));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    commands.get(id).toExecute();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-        if(ae.getSource() == reset){
-            try {
-                commands.get("Reset").toExecute();
-            } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if(ae.getSource() == cancel){
-            try {
-                commands.get("Cancel").toExecute();
-            } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    public CurrencyList getCurrencies() {
-        return currencies;
-    }
-
-    public ExchangeRateLoader getRloader() {
-        return rloader;
-    }
-
-    public Map<String, Command> getCommands() {
-        return commands;
-    }
-
-    public MyMoneyDialog getMyMoneyDialog() {
-        return myMoneyDialog;
-    }
-
-    public MyMoneyDisplay getMyMoneyDisplay() {
-        return myMoneyDisplay;
-    }
-
-    public JButton getCalculate() {
-        return calculate;
-    }
-
-    public JButton getReset() {
-        return reset;
-    }
-
-    public JButton getCancel() {
-        return cancel;
+        });
+        return button;
     }
 }

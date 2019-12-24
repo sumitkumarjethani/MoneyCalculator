@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CurrencyList {
-    private Map<String,Currency> currencies;
+    private final Map<String,Currency> currencies;
 
     public CurrencyList(){
-        currencies = new HashMap<String,Currency>();
+        currencies = new HashMap<>();
     }
     
     public Map<String, Currency> getCurrencies() {
