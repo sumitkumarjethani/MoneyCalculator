@@ -24,7 +24,9 @@ public class Main{
         MyMoneyDialog moneyDialog = new MyMoneyDialog(currencies);
         MyMoneyDisplay moneyDisplay = new MyMoneyDisplay();
         
-        MainFrame mainFrame = new MainFrame(moneyDialog,moneyDisplay);
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.addMoneyDialog(moneyDialog);
+        mainFrame.addMoneyDisplay(moneyDisplay);
         mainFrame.addCommand("Calculate",new CalculateCommand(moneyDialog,moneyDisplay,rateLoader));
         mainFrame.addCommand("Reset",new ResetCommand(moneyDialog,moneyDisplay));
         mainFrame.addCommand("Rates",new RatesCommand(moneyDialog,moneyDisplay,ratesLoader));

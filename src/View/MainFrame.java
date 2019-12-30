@@ -19,10 +19,8 @@ import javax.swing.JPanel;
 public class MainFrame extends JFrame{
     private Map<String,Command> commands;
     private Map<String,String> labels;
-    private final MyMoneyDialog myMoneyDialog;
-    private final MyMoneyDisplay myMoneyDisplay;
     
-    public MainFrame(MyMoneyDialog moneyDialog, MyMoneyDisplay moneyDisplay){
+    public MainFrame(){
         setTitle("Money Calculator");
         setSize(500,300);
         setLocationRelativeTo(null);
@@ -30,35 +28,21 @@ public class MainFrame extends JFrame{
         setLayout(new BorderLayout());
         commands = new HashMap();
         labels = new HashMap();
-        myMoneyDialog = moneyDialog;
-        myMoneyDisplay = moneyDisplay;
         initLabels();
         this.add(toolbar(),BorderLayout.SOUTH);
-        this.add(myMoneyDialog.getPanel(),BorderLayout.NORTH);
-        this.add(myMoneyDisplay.getPanel(),BorderLayout.CENTER);
         this.setResizable(false);
     }
-
-
-    /*
-    @Override
-    public void paint(Graphics g) {
-        g.clearRect(0, 0, this.getWidth(), this.getHeight());
-        try {
-            g.drawImage(awtImage(), 0, 0, this);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
-    private Image awtImage() throws IOException {
-        return ImageIO.read(new File("background.jpg"));
-    }
-    */
     
     public void execute(){
         this.setVisible(true);
+    }
+    
+    public void addMoneyDialog(MyMoneyDialog myMoneyDialog){
+        this.add(myMoneyDialog.getPanel(),BorderLayout.NORTH);
+    }
+    
+    public void addMoneyDisplay(MyMoneyDisplay myMoneyDisplay){
+        this.add(myMoneyDisplay.getPanel(),BorderLayout.CENTER);
     }
     
     public void addCommand(String name,Command command){
