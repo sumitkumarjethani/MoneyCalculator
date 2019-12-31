@@ -5,6 +5,7 @@ import Model.CurrencyList;
 import Model.persistence.ExchangeRateLoader;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class MainFrame extends JFrame{
     
     public MainFrame(){
         setTitle("Money Calculator");
-        setSize(500,300);
+        setSize(600,300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());

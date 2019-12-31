@@ -48,14 +48,15 @@ public class MyMoneyDialog extends JPanel implements MoneyDialog{
     private JComboBox addCurrencyBox() {
         JComboBox comboBox = new JComboBox();
         for (HashMap.Entry<String,Currency> i : currencies.getCurrencies().entrySet()) {
-            comboBox.addItem(i.getKey());
+            String add = i.getKey() + "-" +i.getValue().getName();
+            comboBox.addItem(add);
         }
         return comboBox;
     }
 
     @Override
     public Money getMoney() {
-        Currency from = currencies.get(boxFrom.getSelectedItem().toString());
+        Currency from = this.getCurrencyFrom();
         Money result;
         if(moneyTextField.getText().matches("^[+]?([0-9]+(?:[\\.][0-9]*)?|\\.[0-9]+)$")){
              result = new Money(Double.parseDouble(moneyTextField.getText()),from);
@@ -67,15 +68,18 @@ public class MyMoneyDialog extends JPanel implements MoneyDialog{
 
     @Override
     public Currency getCurrencyTo() {
-        Currency to = currencies.get(boxTo.getSelectedItem().toString());
+        String selectedCurrency = boxTo.getSelectedItem().toString();
+        selectedCurrency = selectedCurrency.substring(0, 3);
+        Currency to = currencies.get(selectedCurrency);
         return to;
     }
     
     public Currency getCurrencyFrom() {
-        Currency from = currencies.get(boxFrom.getSelectedItem().toString());
+        String selectedCurrency = boxFrom.getSelectedItem().toString();
+        selectedCurrency = selectedCurrency.substring(0, 3);
+        Currency from = currencies.get(selectedCurrency);
         return from;
     }
-    
     
     public void setMoneyTextField(String line){
         moneyTextField.setText(line);
