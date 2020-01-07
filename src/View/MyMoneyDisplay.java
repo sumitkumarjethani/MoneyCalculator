@@ -20,8 +20,4 @@ public class MyMoneyDisplay extends JPanel implements MoneyDisplay {
     public void display(String line) {
         this.resultArea.setText(line);
     }
-
-    public JPanel getPanel() {
-        return this;
-    }
 }

@@ -84,8 +84,4 @@ public class MyMoneyDialog extends JPanel implements MoneyDialog{
     public void setMoneyTextField(String line){
         moneyTextField.setText(line);
     }
-    
-    public JPanel getPanel(){
-        return this;
-    }
 }

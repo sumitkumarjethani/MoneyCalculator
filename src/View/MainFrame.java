@@ -1,11 +1,8 @@
 package View;
 
 import Controller.Command;
-import Model.CurrencyList;
-import Model.persistence.ExchangeRateLoader;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -39,11 +36,11 @@ public class MainFrame extends JFrame{
     }
     
     public void addMoneyDialog(MyMoneyDialog myMoneyDialog){
-        this.add(myMoneyDialog.getPanel(),BorderLayout.NORTH);
+        this.add(myMoneyDialog,BorderLayout.NORTH);
     }
     
     public void addMoneyDisplay(MyMoneyDisplay myMoneyDisplay){
-        this.add(myMoneyDisplay.getPanel(),BorderLayout.CENTER);
+        this.add(myMoneyDisplay,BorderLayout.CENTER);
     }
     
     public void addCommand(String name,Command command){

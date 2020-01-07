@@ -16,14 +16,15 @@ import java.io.IOException;
 public class Main{
     
     public static void main(String[] args) throws IOException{
+        //Modelo
         CurrencyList currencies = new CurrencyList();
         CurrencyLoader currencyLoader = new TxtCurrencyLoader("currency.txt");
         currencyLoader.load(currencies);
         ExchangeRateLoader rateLoader = new WebExchangeRateLoader();
         RatesLoader ratesLoader = new WebRatesLoader();
+        //Vista y "Controller"
         MyMoneyDialog moneyDialog = new MyMoneyDialog(currencies);
         MyMoneyDisplay moneyDisplay = new MyMoneyDisplay();
-        
         MainFrame mainFrame = new MainFrame();
         mainFrame.addMoneyDialog(moneyDialog);
         mainFrame.addMoneyDisplay(moneyDisplay);
