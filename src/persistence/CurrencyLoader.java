@@ -1,6 +1,6 @@
-package Model.persistence;
+package persistence;
 
-import Model.CurrencyList;
+import model.CurrencyList;
 
 public interface CurrencyLoader {
     

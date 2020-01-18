@@ -1,4 +1,4 @@
-package Model.persistence.File;
+package files;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,12 +1,10 @@
-package Model.persistence.Web;
+package web;
 
-import Model.Currency;
-import Model.CurrencyList;
-import Model.ExchangeRate;
-import Model.persistence.ExchangeRateLoader;
+import model.Currency;
+import model.ExchangeRate;
+import persistence.ExchangeRateLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,17 +25,13 @@ public class WebExchangeRateLoader implements ExchangeRateLoader{
             
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
                 String line = reader.readLine();
-                JsonParser parser = new JsonParser();
-                JsonObject gsonObj = parser.parse(line).getAsJsonObject();
-                JsonPrimitive datePrimitive = gsonObj.getAsJsonPrimitive("date");
-                String date =  datePrimitive.getAsString();
+                JsonObject gsonObj = new JsonParser().parse(line).getAsJsonObject();
+                String date = gsonObj.getAsJsonPrimitive("date").getAsString();
                 double rate = 0;
                 JsonObject x = gsonObj.getAsJsonObject("rates");
                 for(Object key: x.keySet()){
-                    String codeTo = (String) key;
-                    if(codeTo.equals(to.getCode())){
-                        JsonPrimitive ratePrimitive = x.getAsJsonPrimitive(codeTo);
-                        rate = ratePrimitive.getAsDouble();
+                    if(key.toString().equals(to.getCode())){
+                        rate = x.getAsJsonPrimitive(key.toString()).getAsDouble();
                         break;
                     }
                 }

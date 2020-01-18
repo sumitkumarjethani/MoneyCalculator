@@ -1,10 +1,9 @@
-package Model.persistence.Web;
+package web;
 
-import Model.Currency;
-import Model.persistence.RatesLoader;
+import model.Currency;
+import persistence.RatesLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,8 +12,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class WebRatesLoader implements RatesLoader {
 
@@ -26,20 +23,16 @@ public class WebRatesLoader implements RatesLoader {
             URLConnection connection = url.openConnection();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
                 String line = reader.readLine();
-                JsonParser parser = new JsonParser();
-                JsonObject gsonObj = parser.parse(line).getAsJsonObject();
-                JsonObject x = gsonObj.getAsJsonObject("rates");
+                JsonObject x = new JsonParser().parse(line).getAsJsonObject().getAsJsonObject("rates");
                 for(Object key: x.keySet()){
-                    String codeTo = (String) key;
-                    JsonPrimitive ratePrimitive = x.getAsJsonPrimitive(codeTo);
-                    rates.put(codeTo, ratePrimitive.getAsDouble());
+                    rates.put(key.toString(), x.getAsJsonPrimitive(key.toString()).getAsDouble());
                 }
             }
             return rates;
         } catch (MalformedURLException ex) {
-            Logger.getLogger(WebRatesLoader.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Fallo en la url");
         } catch (IOException ex) {
-            Logger.getLogger(WebRatesLoader.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Fallo la conexión.Intente de nuevo");
         }
         return null;
     }

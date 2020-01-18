@@ -1,7 +1,7 @@
-package Model.persistence.File;
+package files;
 
-import Model.CurrencyList;
-import Model.persistence.CurrencyLoader;
+import model.CurrencyList;
+import persistence.CurrencyLoader;
 
 
 public abstract class FileCurrencyLoader implements CurrencyLoader {

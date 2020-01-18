@@ -1,6 +1,6 @@
-package Model.persistence;
+package persistence;
 
-import Model.Currency;
+import model.Currency;
 import java.util.Map;
 
 public interface RatesLoader {

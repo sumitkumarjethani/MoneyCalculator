@@ -1,9 +1,7 @@
-package Model.persistence.File.Txt;
+package files;
 
-import Model.Currency;
-import Model.CurrencyList;
-import Model.persistence.File.FileIteratorReader;
-import Model.persistence.File.FileCurrencyLoader;
+import model.Currency;
+import model.CurrencyList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +9,6 @@ import java.io.FileReader;
 import java.util.Map;
 import com.google.gson.JsonObject; 
 import com.google.gson.JsonParser; 
-import com.google.gson.JsonPrimitive;
 import java.io.IOException;
 
 public class TxtCurrencyLoader extends FileCurrencyLoader {
@@ -24,17 +21,13 @@ public class TxtCurrencyLoader extends FileCurrencyLoader {
     public void load(CurrencyList list){
         Map<String,Currency> currencies = list.getCurrencies();
         String line = convertFileToString();
-        JsonParser parser = new JsonParser(); 
-        JsonObject gsonObj = parser.parse(line).getAsJsonObject();
+        JsonObject gsonObj = new JsonParser().parse(line).getAsJsonObject();
         for(Object key: gsonObj.keySet()){
-            String base = (String) key;
-            JsonObject info = gsonObj.get(base).getAsJsonObject();
-            JsonPrimitive namePrimitive = info.getAsJsonPrimitive("name");
-            String name = namePrimitive.getAsString();
-            JsonPrimitive symbolPrimitive  = info.getAsJsonPrimitive("symbol");
-            String symbol = symbolPrimitive.getAsString();
-            Currency add = new Currency(name,symbol,base);
-            currencies.put(base, add);
+            JsonObject info = gsonObj.get(key.toString()).getAsJsonObject();
+            String name = info.getAsJsonPrimitive("name").getAsString();
+            String symbol  = info.getAsJsonPrimitive("symbol").getAsString();
+            Currency add = new Currency(name,symbol,key.toString());
+            currencies.put(key.toString(), add);
         }
     }
     

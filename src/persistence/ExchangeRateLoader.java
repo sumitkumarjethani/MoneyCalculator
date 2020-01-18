@@ -1,7 +1,7 @@
-package Model.persistence;
+package persistence;
 
-import Model.Currency;
-import Model.ExchangeRate;
+import model.Currency;
+import model.ExchangeRate;
 import java.io.IOException;
 
 public interface ExchangeRateLoader {
