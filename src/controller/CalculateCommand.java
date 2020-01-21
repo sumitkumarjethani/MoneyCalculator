@@ -3,8 +3,8 @@ package controller;
 import model.Currency;
 import model.Money;
 import persistence.ExchangeRateLoader;
-import view.SwingMoneyDialog;
-import view.SwingMoneyDisplay;
+import swing.SwingMoneyDialog;
+import swing.SwingMoneyDisplay;
 
 import java.io.IOException;
 

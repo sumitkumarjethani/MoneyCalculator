@@ -1,8 +1,8 @@
 package main;
 
-import view.MainFrame;
-import view.SwingMoneyDialog;
-import view.SwingMoneyDisplay;
+import swing.MainFrame;
+import swing.SwingMoneyDialog;
+import swing.SwingMoneyDisplay;
 import controller.CalculateCommand;
 import controller.RatesCommand;
 import controller.ResetCommand;

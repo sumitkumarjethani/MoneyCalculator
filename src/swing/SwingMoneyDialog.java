@@ -1,4 +1,4 @@
-package view;
+package swing;
 
 import model.Currency;
 import model.CurrencyList;
@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import view.MoneyDialog;
 
 public class SwingMoneyDialog extends JPanel implements MoneyDialog{
     private final CurrencyList currencies;

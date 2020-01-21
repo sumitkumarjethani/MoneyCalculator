@@ -1,8 +1,8 @@
 package controller;
 
 import persistence.RatesLoader;
-import view.SwingMoneyDialog;
-import view.SwingMoneyDisplay;
+import swing.SwingMoneyDialog;
+import swing.SwingMoneyDisplay;
 import java.io.IOException;
 import java.util.Map;
 

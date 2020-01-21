@@ -1,7 +1,7 @@
 package controller;
 
-import view.SwingMoneyDialog;
-import view.SwingMoneyDisplay;
+import swing.SwingMoneyDialog;
+import swing.SwingMoneyDisplay;
 
 public class ResetCommand implements Command{
 
