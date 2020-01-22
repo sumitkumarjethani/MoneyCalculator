@@ -1,4 +1,4 @@
-package commands;
+package architecture.controller;
 
 import architecture.controller.*;
 import architecture.model.Currency;

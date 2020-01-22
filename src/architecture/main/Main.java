@@ -1,7 +1,9 @@
 package architecture.main;
 
+import architecture.controller.ResetCommand;
+import architecture.controller.RatesCommand;
+import architecture.controller.CalculateCommand;
 import swing.*;
-import commands.*;
 import architecture.model.CurrencyList;
 import architecture.view.*;
 import architecture.view.persistence.*;
