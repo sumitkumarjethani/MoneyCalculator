@@ -1,4 +1,4 @@
-package model;
+package architecture.model;
 
 public class Currency {
     private final String name;

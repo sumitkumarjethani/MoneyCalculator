@@ -1,7 +1,7 @@
 package files;
 
-import model.Currency;
-import model.CurrencyList;
+import architecture.model.Currency;
+import architecture.model.CurrencyList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

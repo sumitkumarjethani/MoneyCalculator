@@ -1,7 +1,7 @@
 package web;
 
-import model.Currency;
-import persistence.RatesLoader;
+import architecture.model.Currency;
+import architecture.view.persistence.RatesLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
@@ -32,7 +32,7 @@ public class WebRatesLoader implements RatesLoader {
         } catch (MalformedURLException ex) {
             System.out.println("Fallo en la url");
         } catch (IOException ex) {
-            System.out.println("Fallo la conexión.Intente de nuevo");
+            System.out.println("Fallo en la conexión.Intente de nuevo");
         }
         return null;
     }

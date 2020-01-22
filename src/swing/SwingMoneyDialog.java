@@ -1,8 +1,9 @@
 package swing;
 
-import model.Currency;
-import model.CurrencyList;
-import model.Money;
+import architecture.model.Currency;
+import architecture.model.CurrencyList;
+import architecture.model.Money;
+import architecture.view.MoneyDialog;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.HashMap;
@@ -10,7 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import view.MoneyDialog;
 
 public class SwingMoneyDialog extends JPanel implements MoneyDialog{
     private final CurrencyList currencies;
@@ -33,9 +33,9 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog{
         Currency from = this.getCurrencyFrom();
         Money result;
         if(moneyTextField.getText().matches("^[+]?([0-9]+(?:[\\.][0-9]*)?|\\.[0-9]+)$")){
-             result = new Money(Double.parseDouble(moneyTextField.getText()),from);
+            result = new Money(Double.parseDouble(moneyTextField.getText()),from);
         }else{
-            result = null;
+            result = new Money(0,from);
         }
         return result;
     }
@@ -48,7 +48,8 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog{
         return to;
     }
     
-    public void setMoneyTextField(String line){
+    @Override
+    public void setMoneyText(String line){
         moneyTextField.setText(line);
     }
     

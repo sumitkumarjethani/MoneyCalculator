@@ -1,8 +1,8 @@
 package web;
 
-import model.Currency;
-import model.ExchangeRate;
-import persistence.ExchangeRateLoader;
+import architecture.model.Currency;
+import architecture.model.ExchangeRate;
+import architecture.view.persistence.ExchangeRateLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;

@@ -1,6 +1,6 @@
-package persistence;
+package architecture.view.persistence;
 
-import model.CurrencyList;
+import architecture.model.CurrencyList;
 
 public interface CurrencyLoader {
     

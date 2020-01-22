@@ -3,7 +3,7 @@ package swing;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import view.MoneyDisplay;
+import architecture.view.MoneyDisplay;
 
 public class SwingMoneyDisplay extends JPanel implements MoneyDisplay {
     

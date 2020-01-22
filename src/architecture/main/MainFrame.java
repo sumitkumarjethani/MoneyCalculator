@@ -1,6 +1,7 @@
-package swing;
+package architecture.main;
 
-import controller.Command;
+import architecture.controller.*;
+import architecture.view.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import swing.*;
 
 public class MainFrame extends JFrame{
     private final Map<String,Command> commands;
@@ -35,12 +37,12 @@ public class MainFrame extends JFrame{
         this.setVisible(true);
     }
     
-    public void addMoneyDialog(SwingMoneyDialog myMoneyDialog){
-        this.add(myMoneyDialog,BorderLayout.NORTH);
+    public void addMoneyDialog(MoneyDialog moneyDialog){
+        this.add((SwingMoneyDialog)moneyDialog,BorderLayout.NORTH);
     }
     
-    public void addMoneyDisplay(SwingMoneyDisplay myMoneyDisplay){
-        this.add(myMoneyDisplay,BorderLayout.CENTER);
+    public void addMoneyDisplay(MoneyDisplay moneyDisplay){
+        this.add((SwingMoneyDisplay)moneyDisplay,BorderLayout.CENTER);
     }
     
     public void addCommand(String name,Command command){
