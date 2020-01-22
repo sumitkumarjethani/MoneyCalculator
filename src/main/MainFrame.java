@@ -1,4 +1,4 @@
-package architecture.main;
+package main;
 
 import architecture.controller.*;
 import architecture.view.*;
