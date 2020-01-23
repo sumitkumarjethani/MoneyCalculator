@@ -1,6 +1,5 @@
 package architecture.controller;
 
-import architecture.controller.*;
 import architecture.model.Currency;
 import architecture.model.Money;
 import architecture.view.*;

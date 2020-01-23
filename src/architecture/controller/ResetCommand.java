@@ -1,6 +1,5 @@
 package architecture.controller;
 
-import architecture.controller.*;
 import architecture.view.MoneyDialog;
 import architecture.view.MoneyDisplay;
 
